@@ -1,0 +1,15 @@
+{
+  "name": "memarandom-api",
+  "version": "1.0.0",
+  "description": "An api and backend for memarandom frontend project. This should generate random memes each request",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kendpr",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0"
+  }
+}
