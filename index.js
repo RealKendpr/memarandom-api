@@ -3,33 +3,55 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 
 const app = express();
-const port = process.env.DB_PORT;
+const expPORT = 1111;
 
-const connectClient = async () => {
+const dbPORT = process.env.DB_PORT;
+const dbNAME = process.env.DB_NAME;
+const dbURI = process.env.DB_URI;
+
+const connect = async () => {
   let mongoClient;
 
   try {
-    mongoClient = new MongoClient(process.env.DB_URI);
-    await mongoClient.connect();
+    if (dbURI != null) {
+      mongoClient = new MongoClient(dbURI);
+      await mongoClient.connect();
 
-    return mongoClient;
+      return mongoClient;
+    }
   } catch (error) {
     console.error(error);
   }
 };
 
-const getMeme = async () => {
+const readMeme = async () => {
   let mongoClient;
 
   try {
-    mongoClient = await connectClient();
+    mongoClient = await connect();
+
     const collection = mongoClient
       .db(process.env.DB_NAME)
       .collection(process.env.DB_COLLECTIONS);
 
-    const memes = await collection.find({}).toArray();
-    console.log(memes);
-  } catch (error) {}
+    const memes = await collection
+      .aggregate([{ $sample: { size: 1 } }])
+      .toArray();
+
+    return memes[0];
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-getMeme();
+app.get("/api-get", async (_, res) => {
+  try {
+    const memes = await readMeme();
+
+    res.json(memes);
+  } catch (error) {}
+});
+
+app.listen(expPORT, () => {
+  console.log("listening");
+});
