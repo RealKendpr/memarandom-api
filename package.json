@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "An api and backend for memarandom frontend project. This should generate random memes each request",
   "main": "/src/index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
   "author": "kendpr",
   "license": "ISC",
   "dependencies": {
@@ -14,5 +16,8 @@
     "mongodb": "^6.8.0",
     "multer": "^1.4.5-lts.1",
     "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }
