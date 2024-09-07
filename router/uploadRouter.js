@@ -15,4 +15,17 @@ const authenticate = new googleapis.auth.GoogleAuth({
   scopes: apiScope,
 });
 
+uploadRouter.post("/upload", uploadFile.any(), async (res, req) => {
+  try {
+    const { body, files } = req;
+    for (let file = 0; f < files.length; file++) {
+      await uploadFile(files[file]);
+    }
+    console.log(body);
+    res.status(200).send("Done");
+  } catch (file) {
+    res.send(file.message);
+  }
+});
+
 module.exports = uploadRouter;
