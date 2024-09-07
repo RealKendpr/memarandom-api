@@ -18,24 +18,35 @@ const authenticate = new google.auth.GoogleAuth({
 
 const uploadToDrive = async (fileObj) => {
   const bufferStream = new stream.PassThrough().end(fileObj.buffer);
+  const drive = google.drive({
+    version: "v3",
+    auth: authenticate,
+  });
 
-  const { data } = await google
-    .drive({
-      version: "v3",
-      auth: authenticate,
-    })
-    .files.create({
-      media: {
-        mimeType: fileObj.mimeType,
-        body: bufferStream,
-      },
-      requestBody: {
-        name: fileObj.originalName,
-        parents: [process.env.DRIVE_PATH],
-      },
-      fields: "id,name",
-    });
-  console.log(`uploaded ${data.name}, ${data.id}`);
+  const { data } = await drive.files.create({
+    media: {
+      mimeType: fileObj.mimeType,
+      body: bufferStream,
+    },
+    requestBody: {
+      name: fileObj.originalName,
+      parents: [process.env.DRIVE_PATH],
+    },
+    fields: "id,name",
+  });
+
+  await drive.permissions.create({
+    fileId: data.id,
+    requestBody: {
+      role: "reader",
+      type: "anyone",
+    },
+  });
+
+  const fileLink = `https://drive.google.com/uc?id=${data.id}`;
+  console.log(`Direct link to the file: ${fileLink}`);
+
+  // console.log(`uploaded ${data.name}, ${data.id}`);
 };
 
 uploadRouter.post("/upload", uploadFile.any(), async (req, res) => {
