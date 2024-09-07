@@ -10,10 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(getRouter);
 app.use(uploadRouter);
 
-app.get("/", (req, res) => {
+app.get("/upload", (_, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
 app.listen(expressPORT, () => {
-  console.log("listening");
+  console.log("listening to port: 1111");
 });

@@ -1,4 +1,4 @@
-const connect = require("./database");
+const connect = require("../database/database");
 
 const readMeme = async () => {
   let mongoClient;

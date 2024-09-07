@@ -1,5 +1,5 @@
 const express = require("express");
-const { readMeme } = require("../readMeme");
+const { readMeme } = require("../controllers/readMeme");
 
 const getRouter = express.Router();
 
