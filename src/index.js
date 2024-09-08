@@ -1,6 +1,6 @@
 const express = require("express");
 const getRouter = require("./router/getRouter");
-const uploadRouter = require("./router/uploadRouter");
+const postRouter = require("./router/postRouter");
 
 const app = express();
 const expressPORT = 1111;
@@ -8,7 +8,7 @@ const expressPORT = 1111;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(getRouter);
-app.use(uploadRouter);
+app.use(postRouter);
 
 app.get("/upload", (_, res) => {
   res.sendFile(__dirname + "/index.html");
