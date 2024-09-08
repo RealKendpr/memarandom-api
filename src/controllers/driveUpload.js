@@ -2,6 +2,8 @@ const stream = require("stream");
 const path = require("path");
 const { google } = require("googleapis");
 const { saveToDb } = require("../helpers/saveToDb");
+const sharp = require("sharp");
+const { v4: uuidv4 } = require("uuid");
 
 const keyFile = path.join(__dirname, "../credentials/creds.json");
 const apiScope = ["https://www.googleapis.com/auth/drive"];
@@ -17,15 +19,16 @@ const drive = google.drive({
 });
 
 const uploadToDrive = async (fileObj) => {
-  const bufferStream = new stream.PassThrough().end(fileObj.buffer);
+  const webpObj = await sharp(fileObj.buffer).webp().toBuffer();
+  const bufferStream = new stream.PassThrough().end(webpObj);
 
   const { data } = await drive.files.create({
     media: {
-      mimeType: fileObj.mimeType,
+      mimeType: "image/webp",
       body: bufferStream,
     },
     requestBody: {
-      name: fileObj.originalName,
+      name: `${uuidv4()}.webp`,
       parents: [process.env.DRIVE_PATH],
     },
     fields: "id,name",
@@ -40,7 +43,6 @@ const uploadToDrive = async (fileObj) => {
   });
 
   const fileLink = `https://drive.google.com/uc?id=${data.id}`;
-
   await saveToDb(fileLink);
 };
 
