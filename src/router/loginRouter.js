@@ -25,7 +25,11 @@ loginRouter.post("/login", async (req, res) => {
     );
 
     if (username === userCredential[0].username && verifyPass) {
-      req.session.userid = username;
+      req.session.userid = await bcrypt.hash(
+        username + "fdkjf4ng9/gjg].mgjerh13fj",
+        5
+      );
+      console.log(req.session);
       return res.status(200).redirect("/upload");
     } else return res.status(404).send("No records found");
   } catch (error) {
