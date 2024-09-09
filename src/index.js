@@ -1,23 +1,43 @@
 const express = require("express");
 const getRouter = require("./router/getRouter");
-const postRouter = require("./router/postRouter");
+const uploadRouter = require("./router/postRouter");
 const loginRouter = require("./router/loginRouter");
+const session = require("express-session");
 
 const app = express();
 const expressPORT = 1111;
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(getRouter);
-app.use(postRouter);
+app.use(uploadRouter);
 app.use(loginRouter);
 
 // app.get("/upload", (_, res) => {
 //   res.sendFile(__dirname + "/index.html");
 // });
 
-app.get("/login", (_, res) => {
-  res.sendFile(__dirname + "/login.html");
+app.get("/login", (req, res) => {
+  if (req.session.userid) {
+    res.redirect("/upload");
+  } else {
+    res.sendFile(__dirname + "/login.html");
+  }
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
 });
 
 app.listen(expressPORT, () => {
