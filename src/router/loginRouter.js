@@ -4,14 +4,16 @@ const path = require("path");
 const loginRouter = express.Router();
 const bcrypt = require("bcrypt");
 
-const loginPage = path.join(__dirname, "../index.html");
+const uploadPage = path.join(__dirname, "../index.html");
 
 loginRouter.post("/upload", async (req, res) => {
-  // const hashedPass = await bcrypt.hash(req.body.password);
+  // const hashedPassword = await bcrypt.hash('yourPasswordInString');
+  // console.log("hased: " + hashedPassword);
+
   let mongoClient;
+  const { username, password } = req.body;
 
   try {
-    // console.log("hased: " + hashedPass);
     mongoClient = await connect();
 
     const collection = mongoClient
@@ -20,9 +22,14 @@ loginRouter.post("/upload", async (req, res) => {
 
     const userCredential = await collection.find().toArray();
 
-    console.log(userCredential[0]);
+    const verifyPass = await bcrypt.compare(
+      password,
+      userCredential[0].password
+    );
 
-    return res.status(200).sendFile(loginPage);
+    if (username === userCredential[0].username && verifyPass) {
+      return res.status(200).sendFile(uploadPage);
+    } else return res.status(404).send("No records found");
   } catch (error) {
     console.error(error);
   }
