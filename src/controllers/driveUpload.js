@@ -11,18 +11,20 @@ const handleUpload = async (req, res) => {
 
   try {
     const { body, files } = req;
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+    if (req.session.userid) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
 
-      if (allowedMimeTypes.includes(file.mimetype) && file.size <= maxSize) {
-        await uploadToDrive(file);
-      } else {
-        return res
-          .status(400)
-          .send(`File not allowed: ${file.size} bytes, ${file.mimetype}`);
+        if (allowedMimeTypes.includes(file.mimetype) && file.size <= maxSize) {
+          await uploadToDrive(file);
+        } else {
+          return res
+            .status(400)
+            .send(`File not allowed: ${file.size} bytes, ${file.mimetype}`);
+        }
       }
-    }
-    res.status(200).send("Done");
+      res.status(200).send("Done");
+    } else res.redirect("/login");
   } catch (file) {
     res.send(file.message);
   }
