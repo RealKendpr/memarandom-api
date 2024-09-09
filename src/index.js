@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const getRouter = require("./router/getRouter");
 const uploadRouter = require("./router/postRouter");
