@@ -1,14 +1,8 @@
-const connect = require("../database/database");
+const { getCollections } = require("../helpers/getCollections");
 
 const saveToDb = async (fileLink) => {
-  let mongoClient;
-
   try {
-    mongoClient = await connect();
-
-    const collection = mongoClient
-      .db(process.env.DB_NAME)
-      .collection(process.env.DB_COLLECTIONS);
+    const collection = await getCollections(process.env.DB_COLLECTIONS);
 
     await collection.insertOne({
       meme_url: fileLink,

@@ -1,14 +1,8 @@
-const connect = require("../database/database");
+const { getCollections } = require("../helpers/getCollections");
 
 const readMeme = async () => {
-  let mongoClient;
-
   try {
-    mongoClient = await connect();
-
-    const collection = mongoClient
-      .db(process.env.DB_NAME)
-      .collection(process.env.DB_COLLECTIONS);
+    const collection = await getCollections(process.env.DB_COLLECTIONS);
 
     const memes = await collection
       .aggregate([{ $sample: { size: 1 } }])
