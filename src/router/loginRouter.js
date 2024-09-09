@@ -1,12 +1,9 @@
 const connect = require("../database/database");
 const express = require("express");
-const path = require("path");
 const loginRouter = express.Router();
 const bcrypt = require("bcrypt");
 
-const uploadPage = path.join(__dirname, "../index.html");
-
-loginRouter.post("/upload", async (req, res) => {
+loginRouter.post("/login", async (req, res) => {
   // const hashedPassword = await bcrypt.hash('yourPasswordInString');
   // console.log("hased: " + hashedPassword);
 
@@ -28,7 +25,8 @@ loginRouter.post("/upload", async (req, res) => {
     );
 
     if (username === userCredential[0].username && verifyPass) {
-      return res.status(200).sendFile(uploadPage);
+      req.session.userid = username;
+      return res.status(200).redirect("/upload");
     } else return res.status(404).send("No records found");
   } catch (error) {
     console.error(error);

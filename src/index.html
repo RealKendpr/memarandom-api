@@ -8,10 +8,11 @@
 </head>
 
 <body>
-  <form action="/upload-done" method="POST" enctype="multipart/form-data" target="_self">
-    <input type="file" name="file" required>
+  <form action="/upload" method="POST" enctype="multipart/form-data" target="_self">
+    <input type="file" name="file" required multiple>
     <button type="submit">Upload</button>
   </form>
+  <a href="/logout">Logout</a>
 </body>
 <script></script>
 
