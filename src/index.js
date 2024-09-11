@@ -4,6 +4,7 @@ const getRouter = require("./router/getRouter");
 const uploadRouter = require("./router/postRouter");
 const loginRouter = require("./router/loginRouter");
 const session = require("express-session");
+const cors = require("cors");
 
 const app = express();
 const expressPORT = 1111;
@@ -16,6 +17,11 @@ app.use(
     },
     resave: true,
     saveUninitialized: false,
+  })
+);
+app.use(
+  cors({
+    origin: "https://memarandom.onrender.com/",
   })
 );
 app.use(express.json());
