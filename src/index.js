@@ -21,7 +21,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: "https://memarandom.onrender.com/",
+    origin: "https://memarandom.onrender.com",
   })
 );
 app.use(express.json());
