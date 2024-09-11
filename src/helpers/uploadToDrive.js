@@ -8,8 +8,6 @@ const { v4: uuidv4 } = require("uuid");
 const keyFile = process.env.DRIVE_KEY_FILE;
 const apiScope = ["https://www.googleapis.com/auth/drive"];
 
-console.log(keyFile);
-
 const authenticate = new google.auth.GoogleAuth({
   keyFile: keyFile,
   scopes: apiScope,
@@ -21,7 +19,9 @@ const drive = google.drive({
 });
 
 const uploadToDrive = async (fileObj) => {
-  const webpObj = await sharp(fileObj.buffer).webp().toBuffer();
+  const webpObj = await sharp(fileObj.buffer, { failOnError: false })
+    .webp()
+    .toBuffer();
   const bufferStream = new stream.PassThrough().end(webpObj);
 
   const { data } = await drive.files.create({
