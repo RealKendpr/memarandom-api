@@ -44,7 +44,7 @@ const uploadToDrive = async (fileObj) => {
     },
   });
 
-  const fileLink = `https://drive.google.com/uc?id=${data.id}`;
+  const fileLink = `https://drive.google.com/thumbnail?id=${data.id}`;
   await saveToDb(fileLink);
 };
 
