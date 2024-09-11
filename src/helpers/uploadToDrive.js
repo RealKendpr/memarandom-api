@@ -1,12 +1,14 @@
 const stream = require("stream");
-const path = require("path");
+// const path = require("path");
 const { google } = require("googleapis");
 const { saveToDb } = require("../helpers/saveToDb");
 const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
 
-const keyFile = path.join(__dirname, "../credentials/creds.json");
+const keyFile = process.env.DRIVE_KEY_FILE;
 const apiScope = ["https://www.googleapis.com/auth/drive"];
+
+console.log(keyFile);
 
 const authenticate = new google.auth.GoogleAuth({
   keyFile: keyFile,
