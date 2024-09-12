@@ -6,6 +6,12 @@ I am glad that you decided to read this, as it could mean that you are intereste
 
 We expect all contributors to communicate respectfully and considerately. Please refer to our [Code of Conduct](CODE_OF_CONDUCT.md) for more details.
 
+## Things to know about this project
+
+- I am currently storing the images/memes in google drive
+- This project uses MongoDB as a database for storing api responses
+- This project uses NodeJS and Express
+
 ## Types of contributions
 
 - Improving the project documentation
