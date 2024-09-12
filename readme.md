@@ -66,3 +66,7 @@ After making a request, the API will return a response in a JSON format:
 ## How were the memes collected?
 
 The memes generated through this API are ones that I personally considered entertaining or funny and have collected from a variety of different social media platforms. Some memes may offend or hurt the feelings of other people.
+
+## How to contribute?
+
+Please refer to [Contributing Guide](contributing.md) if you want to contribute.
