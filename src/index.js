@@ -1,8 +1,13 @@
 require("dotenv").config();
 const express = require("express");
-const getRouter = require("./router/getRouter");
-const uploadRouter = require("./router/postRouter");
-const loginRouter = require("./router/loginRouter");
+
+// I belive this way works as well and is less crowded if u prefer this u can delete your "router" folder
+const router = require("./routes.js") // feel free delete this and keep your original code
+
+// const getRouter = require("./router/getRouter");
+// const uploadRouter = require("./router/postRouter");
+// const loginRouter = require("./router/loginRouter");
+
 const session = require("express-session");
 const cors = require("cors");
 
@@ -26,9 +31,11 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(getRouter);
-app.use(uploadRouter);
-app.use(loginRouter);
+app.use(router)
+
+// app.use(getRouter);
+// app.use(uploadRouter);
+// app.use(loginRouter);
 
 // app.get("/upload", (_, res) => {
 //   res.sendFile(__dirname + "/index.html");
@@ -48,5 +55,5 @@ app.get("/logout", (req, res) => {
 });
 
 app.listen(expressPORT, () => {
-  console.log("listening to port: 1111");
+  console.log(`Listening on Port: ${expressPORT}`);
 });
