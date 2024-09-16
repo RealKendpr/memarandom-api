@@ -55,5 +55,5 @@ app.get("/logout", (req, res) => {
 });
 
 app.listen(expressPORT, () => {
-  console.log("listening to port: 1111");
+  console.log(`Listening on Port: ${expressPORT}`);
 });
