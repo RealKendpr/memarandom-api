@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 
-// I belive this way works as well and is less crowded if u prefer this u can delete you "router" folder
-const router = require("./routes.js") // feel free delete and this and keep your original code
+// I belive this way works as well and is less crowded if u prefer this u can delete your "router" folder
+const router = require("./routes.js") // feel free delete this and keep your original code
 
 // const getRouter = require("./router/getRouter");
 // const uploadRouter = require("./router/postRouter");
